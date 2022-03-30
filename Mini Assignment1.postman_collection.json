@@ -13,8 +13,25 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
+							"\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is json\", function () {\r",
+							"\r",
+							"    pm.response.to.have.jsonBody;\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -24,30 +41,16 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": ""
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Name\"\r\n    \"job\":\"Job\"\r\n\r\n}"
-				},
-				"url": {
-					"raw": "https://reqres.in/api/users",
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
 					"protocol": "https",
 					"host": [
-						"reqres",
-						"in"
+						"jsonplaceholder",
+						"typicode",
+						"com"
 					],
 					"path": [
-						"api",
-						"users"
+						"posts",
+						"1"
 					]
 				}
 			},
@@ -55,6 +58,45 @@
 		},
 		{
 			"name": "PUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" pm.test(\"Status code is 200\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is json\", function () {\r",
+							"\r",
+							"    pm.response.to.have.jsonBody;\r",
+							"\r",
+							"});\r",
+							" \r",
+							" \r",
+							" let Response = pm.response.json();\r",
+							"console.log(Responce.name);\r",
+							"pm.test(\"verified name and job\",function(){\r",
+							"for(let i=0;i<Response.length;i++){\r",
+							"pm.expect(Response.name).to.eql(\"Arun\");\r",
+							"pm.expect(Response.job).to.eql(\"Manager\");\r",
+							"\r",
+							" }\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -121,6 +163,78 @@
 					"path": [
 						"api",
 						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let Response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"User with 'id' 40 has 'userId'=4\",function()\r",
+							"\r",
+							"{\r",
+							"\r",
+							"let userId=4;\r",
+							"\r",
+							" for(let i=0;i<Response.length;i++)\r",
+							"\r",
+							" {\r",
+							"\r",
+							"     if(Response[i].id==40)\r",
+							"\r",
+							"        {\r",
+							"\r",
+							"            pm.expect(Response[i].userId).to.eql(userId);\r",
+							"\r",
+							"        }\r",
+							"\r",
+							"    }\r",
+							"\r",
+							"});\r",
+							"\r",
+							"//scenario B\r",
+							"\r",
+							"pm.test(\"Every user contains 'title' and its type is String\",function()\r",
+							"\r",
+							"{\r",
+							"\r",
+							"for(let j=0;j<Response.length;j++)\r",
+							"\r",
+							"{\r",
+							"\r",
+							"    let type=Response[j].title\r",
+							"\r",
+							"    pm.expect(typeof(type)).to.eql(\"string\")\r",
+							"\r",
+							"}\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
 					]
 				}
 			},
