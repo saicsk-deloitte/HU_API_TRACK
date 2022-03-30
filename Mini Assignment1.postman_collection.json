@@ -77,6 +77,54 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {   \r",
+							"     pm.response.to.have.status(200);});\r",
+							"    pm.test(\"Response time is less than 400ms\", function ()\r",
+							"     {  \r",
+							"          pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"        });\r",
+							"        pm.test(\"Body is correct\", function ()\r",
+							"         {    pm.response.to.have.jsonBody;\r",
+							"        });\r",
+							"        pm.test(\"verify successful creation of data\",function(){    var Response = pm.response.json();    \r",
+							"        });\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"name\":{{name}},\r\n\r\n    \"job\":{{job}}\r\n\r\n}"
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"variable": [
